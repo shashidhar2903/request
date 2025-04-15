@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7b489467-6a80-4182-adda-3b9285a1268d" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="6fd5eb48-1806-48a9-82e3-f351344be8bd" >
+		<http:request-connection host="dummyjson.com" />
+	</http:request-config>
+	<flow name="requestFlow" doc:id="28777b15-7d86-47c2-944a-6c1779240b69" >
+		<http:listener doc:name="Listener" doc:id="4e263846-14fe-4f7f-9796-295627cd4db3" config-ref="HTTP_Listener_config" path="/request"/>
+		<logger level="INFO" doc:name="Logger" doc:id="aa95c119-8f76-4b64-8b5f-93ec3364dff6" />
+		<http:request method="GET" doc:name="Request" doc:id="05502856-ee29-4d2b-a1c9-8366cf5a99b0" config-ref="HTTP_Request_configuration" path="/users"/>
+		<logger level="INFO" doc:name="Logger" doc:id="2f6c0374-fd79-4e0c-b749-2a7e873b11bd" message="#[payload]"/>
+	</flow>
+</mule>
